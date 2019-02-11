@@ -42,7 +42,7 @@ export default class PersonDetails extends Component {
     }
 
     const { person: {
-        id, name, gender, birthYear, eyeColor }} = this.state.person;
+        id, name, gender, birthYear, eyeColor }} = this.state;
 
     return (
       <div className="person-details card">

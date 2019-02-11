@@ -20,7 +20,7 @@ export default class RandomPlanet extends Component {
     }
 
     componentWillMount(){
-         
+        clearInterval(this.interval);
     }
 
     onPlanetLoaded = (planet) => {
