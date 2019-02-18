@@ -5,13 +5,25 @@ import RandomPlanet from '../random-planet';
 // import ItemList from '../item-list';
 // import ItemDetails from '../item-details';
 import SwapiService from '../../services/swapi-service';
+import DummySwapiService from '../../services/dummy-swapi-service';
+
+import {SwapiServiceProvider} from '../swapi-service-context';
 
 import './app.css';
-import ErrorButton from '../error-button';
+
+import ErrorBoundry from '../error-boundry';
 import ErrorIndicator from '../error-indicator';
-import PeoplePage from '../people-page';
-import Row from '../row/row';
-import ItemDetails from '../item-details';
+
+import   {
+          PersonList,
+          PlanetList,
+          StarshipList,
+          PersonDetails,
+          PlanetDetails,
+          StarshipDetails
+} from '../sw-components';
+
+import ItemDetails, {Record} from '../item-details/item-details';
 
 export default class App extends Component {
 
@@ -43,40 +55,50 @@ export default class App extends Component {
 
     const {getPerson, getStarship, getStarshipImage, getPersonImage} = this.swapiService;
 
-    const personDetails =(
+    const personDetails = (
       <ItemDetails 
         itemId={11}
         getData={getPerson}
-        getImageUrl={getPersonImage}/>
+        getImageUrl={getPersonImage}>
+
+        <Record field="gender" label="Gender" />
+        <Record field="eyeColor" label="Eye Color" />
+      </ItemDetails>
     );
 
     const starshipDetails =(
       <ItemDetails 
         itemId={5}
         getData={getStarship}
-        getImageUrl={getStarshipImage} />
+        getImageUrl={getStarshipImage}>
+
+          <Record field="model" label="Model" />
+          <Record field="length" label="Length" />
+          <Record field="costInCredits" label="Cost" />
+        </ItemDetails>
     );
 
     return (
-      <div className="stardb-app">
-        <Header />
-        {/* {planet}
+      <ErrorBoundry>
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="stardb-app">
+            <Header />
 
-        <button
-          className="toggle-planet btn btn-warning btn-lg"
-          onClick={this.toggleRandomPlanet}
-         >
-          Toggle Random Planet
-        </button>
-        <ErrorButton />
+            <PersonDetails itemId={11}/>
 
-        <PeoplePage /> */}
-      
-        <Row 
-          left={personDetails}
-          right={starshipDetails}
-        />
-      </div>
+            <PlanetDetails itemId={6}/>
+
+            <StarshipDetails itemId={10}/>
+            
+              <PersonList />
+              
+              <StarshipList />
+
+              <PlanetList />
+
+          </div>
+        </SwapiServiceProvider>
+      </ErrorBoundry>
     );
   };
 };

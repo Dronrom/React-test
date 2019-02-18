@@ -19,7 +19,7 @@ export default class SwapiService {
         return res.results.map(this._transformPerson);
     };
 
-   getPerson = async (id) => {
+    getPerson = async (id) => {
         const person = await this.getResource(`/people/${id}/`);
         return this._transformPerson(person);
     };
@@ -85,7 +85,7 @@ export default class SwapiService {
         }
       };
     
-        _transformPerson = (person) => {
+    _transformPerson = (person) => {
         return {
             id: this._extractId(person),
             name: person.name,
