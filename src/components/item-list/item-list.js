@@ -10,7 +10,7 @@ const ItemList = (props) => {
         const { data, onItemSelected, children: renderLabel } = props;
         const items = !data ? null : data.map((item) => {
             const { id } = item;
-            const label = renderLabel(item)
+            const label = renderLabel(item);
             
             return (
                  <li className="list-group-item"
